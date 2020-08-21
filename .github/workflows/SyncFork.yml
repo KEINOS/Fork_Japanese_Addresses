@@ -1,0 +1,33 @@
+name: Sync Fork
+
+on:
+  # Runs at 01:20 on day-of-month 2.
+  schedule:
+    # Ref: 
+    #   - https://help.github.com/en/actions/reference/events-that-trigger-workflows#scheduled-events-schedule
+    #   - https://crontab.guru/examples.html
+    # Cron format:
+    #         ┌───────────── minute (0 - 59)
+    #         │ ┌───────────── hour (0 - 23)
+    #         │ │ ┌───────────── day of the month (1 - 31)
+    #         │ │ │ ┌───────────── month (1 - 12 or JAN-DEC)
+    #         │ │ │ │ ┌───────────── day of the week (0 - 6 or SUN-SAT)
+    #         │ │ │ │ │                                   
+    #         │ │ │ │ │
+    #         │ │ │ │ │
+    #         * * * * *
+    #         * * * * *
+    - cron:  '20 1 2 * *'
+
+jobs:
+  sync:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: TG908/fork-sync@v1.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          owner: llvm
+          base: master
+          head: master
